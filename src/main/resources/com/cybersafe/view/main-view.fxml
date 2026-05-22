@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.cybersafe.controller.MainController" stylesheets="@../style/main.css">
+
+    <BorderPane fx:id="mainContent" styleClass="root">
+        <left>
+            <VBox spacing="20" styleClass="glass-pane" prefWidth="250" style="-fx-margin: 20;">
+                <Label text="CYBERSAFE KIDS" style="-fx-text-fill: #7df9ff; -fx-font-size: 22; -fx-font-weight: bold;"/>
+                <Separator opacity="0.2"/>
+
+                <Button text=" EXPLORER" onAction="#showExplorer" maxWidth="Infinity" styleClass="btn-cyber">
+                    <graphic><FontIcon iconLiteral="fas-map-marked-alt"/></graphic>
+                </Button>
+                <Button text=" DEFENDER GAME" onAction="#startGame" maxWidth="Infinity" styleClass="btn-cyber">
+                    <graphic><FontIcon iconLiteral="fas-shield-virus"/></graphic>
+                </Button>
+                <Button text=" QUIZ ARENA" onAction="#showQuiz" maxWidth="Infinity" styleClass="btn-cyber">
+                    <graphic><FontIcon iconLiteral="fas-brain"/></graphic>
+                </Button>
+
+                <Region VBox.vgrow="ALWAYS"/>
+
+                <!-- CyberBot Avatar -->
+                <VBox alignment="CENTER" spacing="10">
+                    <Circle radius="40" fill="#7df9ff" stroke="#bc00ff" strokeWidth="3"/>
+                    <Label fx:id="lblBotChat" text="Salut ! Je suis CyberBot." wrapText="true" styleClass="cyberbot-bubble"/>
+                </VBox>
+            </VBox>
+        </left>
+
+        <center>
+            <VBox spacing="20" style="-fx-padding: 30;">
+                <HBox spacing="20">
+                    <VBox styleClass="glass-pane" HBox.hgrow="ALWAYS" prefHeight="150" alignment="CENTER">
+                        <Label text="TON SCORE XP" style="-fx-text-fill: #8b949e;"/>
+                        <Label fx:id="lblXP" text="150" style="-fx-text-fill: white; -fx-font-size: 40; -fx-font-weight: bold;"/>
+                    </VBox>
+                    <VBox styleClass="glass-pane" HBox.hgrow="ALWAYS" alignment="CENTER">
+                        <Label text="NIVEAU" style="-fx-text-fill: #8b949e;"/>
+                        <Label text="NOVICE DEFENDER" style="-fx-text-fill: #bc00ff; -fx-font-weight: bold;"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Zone de Simulation Dynamique -->
+                <StackPane fx:id="gameArea" VBox.vgrow="ALWAYS" styleClass="glass-pane">
+                    <Label text="CLIQUE SUR DEFENDER GAME POUR COMMENCER TA MISSION !" style="-fx-text-fill: #7df9ff;"/>
+                </StackPane>
+            </VBox>
+        </center>
+    </BorderPane>
+</StackPane>
