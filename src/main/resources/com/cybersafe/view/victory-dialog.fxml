@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<!-- Un seul VBox racine avec l'ID correct pour les confettis -->
+<VBox fx:id="rootVBox" alignment="CENTER" spacing="25" prefWidth="550" prefHeight="500"
+      style="-fx-background-color: rgba(15, 23, 42, 0.95); -fx-background-radius: 30; -fx-border-color: #39ff14; -fx-border-width: 3; -fx-padding: 30;"
+      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.cybersafe.controller.VictoryController">
+
+    <!-- Titre Principal -->
+    <Label text="🎉 MISSION RÉUSSIE !"
+           style="-fx-text-fill: #39ff14; -fx-font-size: 32; -fx-font-weight: bold;"/>
+
+    <Label text="Tu as protégé le réseau avec brio !"
+           style="-fx-text-fill: white; -fx-font-size: 18;"/>
+
+    <!-- Zone où le badge Bronze est injecté par le code Java -->
+    <StackPane fx:id="badgeContainer" prefHeight="130"/>
+
+    <!-- Section Statistiques -->
+    <HBox spacing="30" alignment="CENTER" style="-fx-padding: 10;">
+        <VBox alignment="CENTER">
+            <Label text="XP GAGNÉ" style="-fx-text-fill: #8b949e; -fx-font-size: 12;"/>
+            <Label text="+100" style="-fx-text-fill: #ffd700; -fx-font-size: 26; -fx-font-weight: bold;"/>
+        </VBox>
+
+        <Separator orientation="VERTICAL" prefHeight="50"/>
+
+        <VBox alignment="CENTER">
+            <Label text="STATUT" style="-fx-text-fill: #8b949e; -fx-font-size: 12;"/>
+            <Label text="BRONZE DEFENDER" style="-fx-text-fill: #CD7F32; -fx-font-size: 20; -fx-font-weight: bold;"/>
+        </VBox>
+    </HBox>
+
+    <!-- Bouton d'action pour continuer -->
+    <Button text="CONTINUER L'AVENTURE ➡️"
+            onAction="#handleContinue"
+            styleClass="btn-cyber"
+            style="-fx-background-color: #39ff14; -fx-text-fill: black; -fx-font-weight: bold; -fx-min-width: 280; -fx-min-height: 45; -fx-background-radius: 10; -fx-cursor: hand;"/>
+
+</VBox>

@@ -1,74 +1,160 @@
-package com.cerberus.controller;
+package com.cybersafe.controller;
 
-import com.cerberus.model.*;
-import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.cybersafe.animations.CyberAnimations;
+import com.cybersafe.model.PlayerProfile;
+import com.cybersafe.service.CyberBotService;
+import com.cybersafe.service.SoundService;
+import com.cybersafe.ui.CyberBotAvatar;
+import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
-import javafx.scene.chart.*;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-
-import java.util.Timer;
-import java.util.TimerTask;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
+import java.io.IOException;
 
 public class MainController {
-    @FXML private Label lblStatus, lblTotal, lblThreats, lblXP;
-    @FXML private TableView<NetworkLog> tableLogs;
-    @FXML private TableColumn<NetworkLog, String> colTime, colSource, colStatus;
-    @FXML private TextArea terminal;
-    @FXML private ProgressBar xpBar;
-    @FXML private LineChart<Number, Number> chart;
 
-    private final ObservableList<NetworkLog> logs = FXCollections.observableArrayList();
-    private final SimulationService sim = new SimulationService();
-    private final XYChart.Series<Number, Number> series = new XYChart.Series<>();
-    private Timer timer;
-    private int tick = 0;
+    // --- Composants FXML ---
+    @FXML private StackPane gameArea;
+    @FXML private Label lblBotChat;
+    @FXML private Label lblXP;
+    @FXML private Label lblLevel;
+    @FXML private ProgressBar xpBar;
+    @FXML private StackPane botContainer;
+    @FXML private TextField txtChatInput;
+
+    // --- Logique & UI Personnalisée ---
+    private CyberBotAvatar cyberBot;
+    private final PlayerProfile player = new PlayerProfile("Junior Defender");
 
     @FXML
     public void initialize() {
-        colTime.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().timestamp().toString().substring(11, 19)));
-        colSource.setCellValueFactory(new PropertyValueFactory<>("source"));
-        colStatus.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().isSuspicious() ? "🚨 ATTACK" : "OK"));
-        tableLogs.setItems(logs);
-        chart.getData().add(series);
-        runIntro();
+        // Sécurité : On vérifie que le conteneur existe dans le FXML
+        if (botContainer != null) {
+            cyberBot = new CyberBotAvatar();
+            botContainer.getChildren().add(cyberBot);
+            CyberAnimations.floatAnimation(botContainer);
+        } else {
+            System.err.println("❌ ERREUR : botContainer est introuvable dans le FXML !");
+        }
+
+        updateBotMessage("Prêt pour ta mission, Junior Defender ? 🚀");
+        updateUI();
     }
 
-    private void runIntro() {
-        terminal.appendText(" > NEON-SENTINEL ACADEMY READY...\n > WAITING FOR COMMANDS...");
+    // --- NAVIGATION ---
+
+    @FXML
+    private void showExplorer() {
+        SoundService.playClick();
+        loadModule("/com/cybersafe/view/network-explorer.fxml");
+        updateBotMessage("Explorons le réseau ! Clique sur les icônes. 🌐");
     }
 
-    @FXML public void startNormal() { startSim("NORMAL", "SYSTEM PROTECTED", "#39ff14"); }
-    @FXML public void startBruteForce() { startSim("BRUTE_FORCE", "ATTACK DETECTED: BRUTE FORCE", "#ff003c"); }
-    @FXML public void startDDoS() { startSim("DDOS", "CRITICAL: DDOS IN PROGRESS", "#ff8c00"); }
+    @FXML
+    private void showQuiz() {
+        SoundService.playClick();
+        loadModule("/com/cybersafe/view/quiz-arena.fxml");
+        updateBotMessage("Prêt pour le défi ? Réponds aux questions ! 🏆");
+    }
 
-    private void startSim(String mode, String msg, String color) {
-        if(timer != null) timer.cancel();
-        sim.setScenario(mode);
-        lblStatus.setText(msg);
-        lblStatus.setStyle("-fx-text-fill: " + color);
-        terminal.appendText("\n [MODE] " + mode + " INITIATED.");
+    @FXML
+    public void startGame() {
+        SoundService.playClick();
+        loadModule("/com/cybersafe/view/defender-game.fxml");
+        updateBotMessage("⚠️ ALERTE : Des virus attaquent ! Bloque les ronds rouges ! ⚡");
+    }
 
-        timer = new Timer(true);
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override public void run() {
-                Platform.runLater(() -> {
-                    NetworkLog log = sim.generateData();
-                    logs.add(0, log);
-                    series.getData().add(new XYChart.Data<>(tick++, log.packetSize()));
-                    if(series.getData().size() > 20) series.getData().remove(0);
-                    lblTotal.setText(String.valueOf(logs.size()));
-                });
+    // --- INTELLIGENCE ARTIFICIELLE (CHAT) ---
+
+    @FXML
+    private void handleAIChat() {
+        String input = txtChatInput.getText().toLowerCase().trim();
+        if (input.isEmpty()) return;
+
+        txtChatInput.clear();
+        SoundService.playClick();
+
+        String response = switch (input) {
+            case String s when s.contains("ssh") -> "🚀 Le SSH est un tunnel secret pour commander un ordinateur à distance en toute sécurité !";
+            case String s when s.contains("http") -> "🌍 Le HTTP est le langage du web. Le HTTPS est la version protégée !";
+            case String s when s.contains("virus") -> "👾 Un virus est un programme méchant. L'Antivirus est ton bouclier !";
+            case String s when s.contains("hacker") -> "🕵️ Un hacker cherche des failles. Toi, tu es un Defender !";
+            case String s when s.contains("bonjour") || s.contains("salut") -> "Salut ! Pose-moi une question sur la cybersécurité ! 😊";
+            default -> "🤔 Je ne connais pas encore ce mot. Demande-moi des infos sur les 'virus' ou les 'mots de passe' !";
+        };
+
+        updateBotMessage(response);
+    }
+
+    // --- GESTION DU BOT (FUSIONNÉE) ---
+
+    /**
+     * Met à jour le message, change la couleur de la bulle et l'humeur du robot.
+     */
+    public void updateBotMessage(String message) {
+        // 1. Gestion du Mood et du Style CSS selon le contenu
+        if (message.contains("⚠️") || message.contains("❌")) {
+            cyberBot.setMood("ALERT");
+            lblBotChat.setStyle("-fx-background-color: #ff003c; -fx-text-fill: white; -fx-padding: 10; -fx-background-radius: 10;");
+        } else if (message.contains("🎉") || message.contains("🌟") || message.contains("GÉNIAL")) {
+            cyberBot.setMood("SUCCESS");
+            lblBotChat.setStyle("-fx-background-color: #39ff14; -fx-text-fill: black; -fx-padding: 10; -fx-background-radius: 10;");
+        } else {
+            cyberBot.setMood("NORMAL");
+            lblBotChat.setStyle("-fx-background-color: white; -fx-text-fill: black; -fx-padding: 10; -fx-background-radius: 10;");
+        }
+
+        // 2. Animation de machine à écrire
+        CyberBotService.typeMessage(lblBotChat, message);
+    }
+
+    // --- SYSTÈME DE JEU ---
+
+    public void addXP(int amount) {
+        player.addXp(amount);
+        updateUI();
+    }
+
+    private void updateUI() {
+        if (lblXP != null) lblXP.setText("XP: " + player.getXp());
+        if (lblLevel != null) lblLevel.setText("Lvl: " + player.getLevel());
+        if (xpBar != null) xpBar.setProgress(player.getXp() / 100.0);
+    }
+
+    public void showVictory() {
+        loadModule("/com/cybersafe/view/victory-dialog.fxml");
+        updateBotMessage("🎉 INCROYABLE ! Regarde ton nouveau badge ! Tu es un héros !");
+    }
+
+    private void loadModule(String fxmlPath) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Node node = loader.load();
+
+            Object controller = loader.getController();
+            if (controller instanceof BaseGameController bgc) {
+                bgc.setMainController(this);
+
+                // Déclenchement des logiques spécifiques
+                if (bgc instanceof QuizArenaController qac) qac.startQuiz();
+                if (bgc instanceof DefenderGameController dgc) dgc.startGameLogic();
             }
-        }, 0, 800);
+
+            gameArea.getChildren().setAll(node);
+
+            FadeTransition ft = new FadeTransition(Duration.millis(500), node);
+            ft.setFromValue(0); ft.setToValue(1); ft.play();
+
+        } catch (IOException e) {
+            System.err.println("Erreur chargement module : " + fxmlPath);
+            e.printStackTrace();
+        }
     }
 
-    @FXML public void runQuiz() {
-        terminal.appendText("\n [QUIZ] What is SHA-256? (A: Encryption, B: Hash, C: Protocol)");
-        // Logique simplifiée pour XP
-        xpBar.setProgress(xpBar.getProgress() + 0.1);
-        lblXP.setText("XP: " + (int)(xpBar.getProgress()*100));
-    }
+    public Label getBotLabel() { return lblBotChat; }
 }

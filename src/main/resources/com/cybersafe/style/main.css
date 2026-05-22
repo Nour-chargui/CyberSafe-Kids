@@ -1,0 +1,27 @@
+.root { -fx-background-color: #0f172a; }
+.glass-pane {
+    -fx-background-color: rgba(30, 41, 59, 0.7);
+    -fx-background-radius: 15;
+    -fx-border-color: #7df9ff;
+}
+.btn-cyber {
+    -fx-background-color: #7df9ff;
+    -fx-text-fill: black;
+    -fx-cursor: hand;
+}
+.xp-bar .bar { -fx-background-color: #bc00ff; }
+.cyberbot-bubble {
+    /* Fond de la bulle (bleu nuit ou transparent) */
+    -fx-background-color: rgba(30, 41, 59, 0.9);
+    -fx-background-radius: 15;
+    -fx-padding: 15;
+
+    /* COULEUR DU TEXTE : On passe du gris (#8b949e) au blanc pur */
+    -fx-text-fill: #ffffff;
+
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 14px;
+
+    /* Optionnel : Lueur blanche autour du texte pour l'effet néon */
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.3), 5, 0, 0, 0);
+}

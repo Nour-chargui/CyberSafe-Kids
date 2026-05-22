@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.cybersafe.controller.DefenderGameController"
+      alignment="CENTER" spacing="15" style="-fx-padding: 30;"
+      prefWidth="600" prefHeight="500" styleClass="glass-pane">
+
+    <Label text="🛡️ MISSION : DÉFENSE DU RÉSEAU"
+           style="-fx-text-fill: #7df9ff; -fx-font-size: 24; -fx-font-weight: bold;"/>
+
+    <Label text="Clique sur les virus ROUGES. Ne touche pas aux paquets VERTS !"
+           style="-fx-text-fill: #8b949e; -fx-font-size: 14;"/>
+
+    <!-- La zone de jeu dynamique -->
+    <Pane fx:id="playZone" VBox.vgrow="ALWAYS"
+          style="-fx-background-color: #0f172a; -fx-border-color: #bc00ff; -fx-border-radius: 15; -fx-background-radius: 15; -fx-border-width: 2;">
+        <children>
+            <!-- Les paquets seront générés ici par le code Java -->
+        </children>
+    </Pane>
+
+    <HBox alignment="CENTER" spacing="20">
+        <Label fx:id="lblLocalScore" text="Menaces stoppées : 0" style="-fx-text-fill: #39ff14;"/>
+    </HBox>
+</VBox>

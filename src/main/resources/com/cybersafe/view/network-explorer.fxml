@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<HBox spacing="20" styleClass="glass-pane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.cybersafe.controller.NetworkExplorerController" style="-fx-padding: 30;">
+
+    <!-- Zone de sélection à gauche -->
+    <VBox spacing="30" alignment="CENTER" prefWidth="300">
+        <Label text="🌐 RÉSEAU" style="-fx-text-fill: #7df9ff; -fx-font-size: 20; -fx-font-weight: bold;"/>
+
+        <VBox fx:id="boxPC" alignment="CENTER" spacing="10" onMouseClicked="#selectPC" styleClass="explorer-card">
+            <FontIcon iconLiteral="fas-laptop" iconSize="50" iconColor="#7df9ff"/>
+            <Label text="ORDINATEUR" style="-fx-text-fill: white;"/>
+        </VBox>
+
+        <VBox fx:id="boxRouter" alignment="CENTER" spacing="10" onMouseClicked="#selectRouter" styleClass="explorer-card">
+            <FontIcon iconLiteral="fas-route" iconSize="50" iconColor="#bc00ff"/>
+            <Label text="ROUTEUR" style="-fx-text-fill: white;"/>
+        </VBox>
+
+        <VBox fx:id="boxFirewall" alignment="CENTER" spacing="10" onMouseClicked="#selectFirewall" styleClass="explorer-card">
+            <FontIcon iconLiteral="fas-shield-alt" iconSize="50" iconColor="#ff003c"/>
+            <Label text="PARE-FEU" style="-fx-text-fill: white;"/>
+        </VBox>
+    </VBox>
+
+    <Separator orientation="VERTICAL" opacity="0.2"/>
+
+    <!-- Panneau d'information dynamique à droite -->
+    <VBox fx:id="infoPanel" spacing="15" alignment="TOP_CENTER" HBox.hgrow="ALWAYS" style="-fx-background-color: rgba(255,255,255,0.05); -fx-padding: 20; -fx-background-radius: 15;">
+        <Label fx:id="lblInfoTitle" text="Sélectionne un appareil" style="-fx-text-fill: #7df9ff; -fx-font-size: 24; -fx-font-weight: bold;"/>
+        <Label fx:id="lblInfoDesc" wrapText="true" style="-fx-text-fill: white; -fx-font-size: 16;" textAlignment="CENTER"/>
+        <StackPane fx:id="animContainer" prefHeight="200" VBox.vgrow="ALWAYS"/>
+    </VBox>
+</HBox>

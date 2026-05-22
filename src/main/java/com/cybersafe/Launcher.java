@@ -1,8 +1,8 @@
-package com.cerberus;
+package com.cybersafe;
 
 public class Launcher {
     public static void main(String[] args) {
-        // Cette ligne appelle le point d'entrée réel de votre application
+        // Bootstrap pour JavaFX 21+
         MainApp.main(args);
     }
 }

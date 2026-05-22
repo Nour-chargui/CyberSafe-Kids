@@ -1,16 +1,25 @@
-module com.example.mininetworkmonitor {
+module com.cybersafe {
+    // --- MODULES JAVAFX ---
     requires javafx.controls;
     requires javafx.fxml;
-    requires javafx.web;
+    requires javafx.media;
 
-    requires org.controlsfx.controls;
-    requires com.dlsc.formsfx;
-    requires net.synedra.validatorfx;
+    // --- MODULES JACKSON ---
+    requires com.fasterxml.jackson.databind;
+    requires com.fasterxml.jackson.datatype.jsr310;
+
+    // --- MODULES ICÔNES ---
     requires org.kordamp.ikonli.javafx;
-    requires org.kordamp.bootstrapfx.core;
-    requires eu.hansolo.tilesfx;
-    requires com.almasb.fxgl.all;
+    requires org.kordamp.ikonli.fontawesome5;
+    //--- API Grok ---
+    requires java.net.http;
+    // --- ACCÈS RÉFLEXION (Indispensable pour JavaFX et Jackson) ---
+    opens com.cybersafe.controller to javafx.fxml;
+    opens com.cybersafe.view to javafx.fxml;
+    opens com.cybersafe.model to com.fasterxml.jackson.databind;
 
-    opens com.example.mininetworkmonitor to javafx.fxml;
-    exports com.example.mininetworkmonitor;
+    // --- EXPOSITION ---
+    exports com.cybersafe;
+    exports com.cybersafe.controller;
+    exports com.cybersafe.model;
 }

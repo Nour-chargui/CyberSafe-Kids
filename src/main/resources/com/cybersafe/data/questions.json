@@ -1,0 +1,30 @@
+{
+  "NETWORK_BASICS": {
+    "BEGINNER": [
+      {
+        "text": "Que signifie IP dans 'Adresse IP' ?",
+        "options": ["Internet Protocol", "Informatique Privée", "Interface Port"],
+        "correctIndex": 0,
+        "explanation": "L'IP est la règle qui permet aux ordinateurs de se trouver sur le réseau, comme une adresse postale !"
+      }
+    ],
+    "INTERMEDIATE": [
+      {
+        "text": "Quel port est utilisé par le protocole HTTP ?",
+        "options": ["22", "443", "80"],
+        "correctIndex": 2,
+        "explanation": "Le port 80 est la porte d'entrée standard pour les sites web non sécurisés."
+      }
+    ]
+  },
+  "PASSWORD_SECURITY": {
+    "BEGINNER": [
+      {
+        "text": "Lequel de ces mots de passe est le plus fort ?",
+        "options": ["123456", "MonChat2024", "Cyb3r!#S4f3"],
+        "correctIndex": 2,
+        "explanation": "Un mot de passe fort mélange majuscules, chiffres et symboles spéciaux !"
+      }
+    ]
+  }
+}

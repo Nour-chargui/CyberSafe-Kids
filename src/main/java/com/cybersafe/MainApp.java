@@ -1,4 +1,4 @@
-package com.cerberus;
+package com.cybersafe;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -6,39 +6,43 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.net.URL;
 
+/**
+ * Point d'entrée réel de l'application JavaFX.
+ * Hérite de 'Application' pour gérer le cycle de vie de la fenêtre.
+ */
 public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        // 1. Chargement sécurisé du fichier FXML
-        URL fxmlLocation = getClass().getResource("/com/cerberus/view/main-view.fxml");
+        // 1. Chargement sécurisé du fichier FXML (Vue)
+        URL fxmlLocation = getClass().getResource("/com/cybersafe/view/main-view.fxml");
 
         if (fxmlLocation == null) {
-            // Si c'est null, cela signifie que le fichier n'est pas au bon endroit dans 'resources'
-            throw new RuntimeException("ERREUR CRITIQUE: Le fichier /com/cerberus/view/main-view.fxml est introuvable.");
+            throw new RuntimeException("ERREUR CRITIQUE : Le fichier main-view.fxml est introuvable dans resources.");
         }
 
         FXMLLoader loader = new FXMLLoader(fxmlLocation);
-        Scene scene = new Scene(loader.load(), 1100, 700);
+        Scene scene = new Scene(loader.load(), 1200, 800);
 
-        // 2. Chargement sécurisé du fichier CSS
-        URL cssLocation = getClass().getResource("/com/cerberus/style/style.css");
+        // 2. Chargement sécurisé du CSS (Style)
+        URL cssLocation = getClass().getResource("/com/cybersafe/style/main.css");
         if (cssLocation != null) {
             scene.getStylesheets().add(cssLocation.toExternalForm());
         } else {
-            System.err.println("AVERTISSEMENT: Fichier style.css introuvable dans resources.");
+            System.err.println("AVERTISSEMENT : main.css introuvable, l'app tournera sans style.");
         }
 
-        // 3. Configuration de la fenêtre principale
-        stage.setTitle("NEON SENTINEL - Cyber Security Academy");
+        // 3. Configuration de la fenêtre "NEON DEFENDER"
+        stage.setTitle("🛡️ CYBERSAFE KIDS - NEON DEFENDER");
         stage.setScene(scene);
-        stage.setResizable(true);
+        stage.setMinWidth(1000);
+        stage.setMinHeight(700);
         stage.show();
     }
 
     /**
-     * Point d'entrée pour lancer l'application JavaFX.
-     * Cette méthode est appelée par la classe Launcher.
+     * LA MÉTHODE MANQUANTE ÉTAIT ICI :
+     * C'est le pont indispensable pour que le Launcher puisse démarrer JavaFX.
      */
     public static void main(String[] args) {
         launch(args);
