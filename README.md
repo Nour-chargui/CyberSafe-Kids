@@ -34,29 +34,7 @@ Le projet repose sur une **Clean Architecture** suivant le pattern **MVC (Modèl
 *   **Persistance** : JSON (Jackson Databind)
 *   **Iconographie** : Ikonli (FontAwesome 5)
 
----
-
-## 👥 L'Équipe "Neon Defenders"
-
-Projet réalisé dans le cadre du module [NOM_DU_COURS] par :
-
-1.  **Salim KORDHOGHLI** : Lead Architect & AI Logic
-2.  **Anissa GHARBI** : UI/UX Design & Animations
-3.  **Nour CHARGUI** : Game Development & Logic
-4.  **Med Aziz INOUBLI** : Data Management & Quality Assurance
 
 ---
 
-## 📥 Installation et Lancement
-
-1.  Cloner le dépôt :
-    ```bash
-    git clone https://github.com/VOTRE_PSEUDO/CyberSafe-Kids.git
-    ```
-2.  Importer le projet dans **IntelliJ IDEA** comme projet Maven.
-3.  Vérifier que le SDK est configuré sur **Java 21** ou supérieur.
-4.  Lancer l'application via la classe `com.cybersafe.Launcher`.
-
----
-
-© 2026 CyberSafe Kids Team - Projet Universitaire TEK-UP
+© 2026 CyberSafe Kids - Projet Universitaire TEK-UP
